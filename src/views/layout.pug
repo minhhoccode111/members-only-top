@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="description" content="I need new songs, any recommendation?")
+    meta(name="robots" content="index,follow")
+    meta(name="googlebot" content="index,follow")
+    meta(name="google" content="notranslate")
+    meta(name="subject" content="your document's subject")
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="/stylesheets/custom.css")
+    //- our custom javascript and css files
+    block link
+  body(class="bg-black")
+    div#wrapper(class="")
+      header(class="")
+        h1(class="") 
+          a(href="#") Dummy Text
+        nav(class="")
+          ul(class="")
+            li(class="") 
+              a(class="" href="#") Home
+            li(class="") 
+              a(class="" href="#") Artists
+            li(class="")
+              a(class="" href="#") Songs      
+          
+            li(class="") 
+              a(class="" href="#") About  
+            li(class="") 
+              a(class="" href="#") Add artist      
+            li(class="") 
+              a(class="" href="#") Add song  
+            //- class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold" 
+
+      main(class="")
+        block content 
+
+      footer(class="p-2 flex items-center justify-center border-t-2") 
+        p(class="text-xs")
+          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold"  href="https://github.com/minhhoccode111/inventory-application-top/") This project
+          |is made with 
+          span(class="text-red-400") love 
+          |by
+          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold"  href="https://github.com/minhhoccode111/") minhhoccode111
+          |.
