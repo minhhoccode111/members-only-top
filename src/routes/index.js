@@ -1,42 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const asyncHandler = require('express-async-handler');
+const controller = require('../controllers/controllers');
 
-/* GET home page. */
-router.get(
-  '/',
-  asyncHandler(async (req, res, next) => {
-    res.render('index', { title: 'Members Only' });
-  })
-);
+router.get('/', controller.index_get);
 
-router.get(
-  '/about',
-  asyncHandler(async (req, res, next) => {
-    res.send(`ABOUT GET: NOT IMPLEMENTED YET`);
-    // res.render('about', { title: 'About' });
-  })
-);
+router.post('/', controller.index_post);
 
-router.get(
-  '/:id',
-  asyncHandler(async (req, res, next) => {
-    res.send(`:ID: ${req.params.id} GET: NOT IMPLEMENTED YET`);
-  })
-);
-
-router.get(
-  '/',
-  asyncHandler(async (req, res, next) => {
-    res.render('index', { title: 'Express' });
-  })
-);
-
-router.get(
-  '/',
-  asyncHandler(async (req, res, next) => {
-    res.render('index', { title: 'Express' });
-  })
-);
+router.get('/about', controller.about_get);
 
 module.exports = router;

@@ -7,25 +7,26 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
     length: {
       min: 1,
     },
   },
   content: {
     type: String,
-    require: true,
+    required: true,
     length: {
       min: 1,
     },
   },
   created_at: {
     type: Date,
-    require: true,
+    default: Date.now,
   },
-  author: {
-    type: { type: Schema.ObjectId, ref: 'User' },
-    require: true,
+  user: {
+    type: Schema.ObjectId,
+    ref: 'User',
+    required: true,
   },
 });
 
