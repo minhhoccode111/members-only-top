@@ -13,7 +13,7 @@ const debug = require('debug')('debug-custom');
 // connect database
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-const dev_db_url = 'mongodb+srv://minhhoccode111:mHfEeMaU9Wze4SRo@cluster0.qhizihs.mongodb.net/?retryWrites=true&w=majority';
+const dev_db_url = 'mongodb+srv://minhhoccode111:FOgvsF1s5IS6siuj@cluster0.hvlxd0y.mongodb.net/?retryWrites=true&w=majority';
 
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
@@ -26,9 +26,7 @@ async function main() {
 }
 
 // routes controllers
-const indexRouter = require('./src/routes/index');
-const aboutRouter = require('./src/routes/about');
-const messageRouter = require('./src/routes/message');
+const router = require('./src/routes/index');
 
 const app = express();
 
@@ -48,15 +46,19 @@ app.use(compression());
 // security HTTP header
 app.use(helmet.contentSecurityPolicy({ directives: { 'script-src': ["'self'"] } }));
 
+// basic setup
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/about', aboutRouter);
-app.use('/message', messageRouter);
+// session
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
+app.use(passport.saveUninitialized());
+app.use(passport.session());
+
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
