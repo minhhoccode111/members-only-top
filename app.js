@@ -1,5 +1,5 @@
 const RateLimit = require('express-rate-limit');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const compression = require('compression');
 const express = require('express');
@@ -51,15 +51,33 @@ app.use(helmet.contentSecurityPolicy({ directives: { 'script-src': ["'self'"] } 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser()); // this may result in issues if the secret is not the same between this module and session
+// app.use(cookieParser({ secret: process.env.SECRET })); // may not need this when we have session
 app.use(express.static(path.join(__dirname, 'public')));
 
 // session
 const session = require('express-session');
 const passport = require('passport');
-app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
+
+// session object
+const ses = {
+  secret: process.env.SECRET,
+  resave: false, // should we resave the session hasn't been modified, performance gain
+  saveUninitialized: true, // whether a session be created for new but not yet modified session
+  // TODO change to 7 days after develop
+  // cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+  cookie: { maxAge: 1000 * 60 * 2 }, // 2 mins
+};
+
+// use secure in production but allowing for testing in development
+debug(process.env.NODE_ENV);
+if (process.env.NODE_ENV === 'production') {
+  ses.cookie.secure = true; // serve secure cookies, only allow cookies on HTTPS
+}
+
+app.use(session(ses)); // set session
 app.use(passport.initialize());
 app.use(passport.session());
+// TODO serialize and deserialize should be add when login
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
