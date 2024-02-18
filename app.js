@@ -26,7 +26,8 @@ async function main() {
 }
 
 // routes controllers
-const router = require('./src/routes/index');
+const indexRouter = require('./src/routes/index');
+const userRouter = require('./src/routes/user');
 
 const app = express();
 
@@ -50,7 +51,7 @@ app.use(helmet.contentSecurityPolicy({ directives: { 'script-src': ["'self'"] } 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser()); // this may result in issues if the secret is not the same between this module and session
 app.use(express.static(path.join(__dirname, 'public')));
 
 // session
@@ -60,7 +61,8 @@ app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', router);
+app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
