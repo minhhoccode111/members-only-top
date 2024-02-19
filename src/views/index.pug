@@ -22,7 +22,12 @@ block content
           p 
             strong!= mess.title
           p!= mess.content
-          p!= mess.timestamp_formatted
+          if user && user.membership
+            p!= mess.timestamp_formatted
+            p!= mess.user.fullname
+
+          else 
+            i(class="text-xs") Be a member to see this message details
 
 
   else

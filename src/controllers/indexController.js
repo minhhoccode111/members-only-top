@@ -19,7 +19,7 @@ const passport = require('passport');
 
 // index handlers
 module.exports.index = asyncHandler(async (req, res, next) => {
-  const messages = await Message.find({}).sort({ created_at: -1 }).exec();
+  const messages = await Message.find({}).sort({ created_at: -1 }).populate('user').exec();
 
   res.render('index', {
     title: 'Home',
@@ -42,6 +42,7 @@ module.exports.logout = asyncHandler(async (req, res, next) => {
 });
 
 module.exports.login_get = asyncHandler(async (req, res, next) => {
+  debug(`the error messages: `, req.session.messages);
   res.render('login-form', {
     title: 'Login',
     messages: req.session.messages, // alert wrong password or username

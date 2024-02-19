@@ -85,9 +85,11 @@ app.use(session(ses)); // set session
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
+      debug(`call local strategy`, username, password);
       const user = await User.findOne({ username: username });
+      debug(`local strategy user: `, user);
       if (!user) return done(null, false, { message: 'Incorrect username' });
-      if (bcrypt.compare(user.password, password)) return done(null, false, { message: 'Incorrect password' });
+      if (!bcrypt.compare(user.password, password)) return done(null, false, { message: 'Incorrect password' });
       return done(null, user);
     } catch (err) {
       return done(err);
@@ -108,9 +110,8 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.use(passport.initialize());
 app.use(passport.session());
-// TODO serialize and deserialize should be add when login
+app.use(passport.initialize());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
