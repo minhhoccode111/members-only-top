@@ -7,6 +7,7 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const path = require('path');
 require('dotenv').config();
+const bcrypt = require('bcrypt');
 
 const debug = require('debug')('debug-custom');
 
@@ -24,6 +25,10 @@ main()
 async function main() {
   await mongoose.connect(mongoDB);
 }
+
+// db models
+const User = require('./src/models/user');
+const Message = require('./src/models/message');
 
 // routes controllers
 const indexRouter = require('./src/routes/index');
@@ -57,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // session
 const session = require('express-session');
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 // session object
 const ses = {
@@ -75,9 +81,41 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(session(ses)); // set session
+// call this when passport.authenticate() is called in /login post request
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username: username });
+      if (!user) return done(null, false, { message: 'Incorrect username' });
+      if (bcrypt.compare(user.password, password)) return done(null, false, { message: 'Incorrect password' });
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 // TODO serialize and deserialize should be add when login
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);

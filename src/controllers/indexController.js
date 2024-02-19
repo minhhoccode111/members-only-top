@@ -14,15 +14,24 @@ const debug = require('debug')('debug-custom');
 // bcrypt to secure password
 const bcrypt = require('bcrypt');
 
+// for login
+const passport = require('passport');
+
 // index handlers
 module.exports.index = asyncHandler(async (req, res, next) => {
+  const messages = await Message.find({}).sort({ created_at: -1 }).exec();
+
   res.render('index', {
     title: 'Home',
+    messages,
+    user: req.user,
   });
 });
 
 module.exports.about = (req, res, next) => {
-  res.send(`ABOUT GET: NOT IMPLEMENTED`);
+  res.render('about', {
+    title: 'About',
+  });
 };
 
 module.exports.logout = asyncHandler(async (req, res, next) => {
@@ -35,12 +44,19 @@ module.exports.logout = asyncHandler(async (req, res, next) => {
 module.exports.login_get = asyncHandler(async (req, res, next) => {
   res.render('login-form', {
     title: 'Login',
+    messages: req.session.messages, // alert wrong password or username
   });
 });
 
-module.exports.login_post = asyncHandler(async (req, res, next) => {
-  res.send(`LOGIN POST: NOT IMPLEMENTED`);
-});
+module.exports.login_post = [
+  passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureMessage: true,
+  }),
+  (req, res) => {
+    res.redirect('/');
+  },
+];
 
 module.exports.signup_get = asyncHandler(async (req, res, next) => {
   res.render('signup-form', {

@@ -2,4 +2,31 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+
+  if user && user.admin 
+    p You are an admin user
+
+  else if user && user.membership
+    p You are a member user
+
+  else if user 
+    p You are a normal user
+
+  else
+    p You are an anonymous user
+
+  if messages.length !== 0
+    ul 
+      each mess in messages
+        li
+          p 
+            strong!= mess.title
+          p!= mess.content
+          p!= mess.timestamp_formatted
+
+
+  else
+    p There are no messages yet! 
+
+
+
