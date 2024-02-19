@@ -16,12 +16,16 @@ const UserSchema = new Schema({
     required: true,
     length: {
       min: 8,
-      max: 16,
+      max: 32,
     },
   },
   password: {
     type: String,
     required: true,
+    length: {
+      min: 8,
+      max: 32,
+    },
   },
   membership: {
     type: Boolean,

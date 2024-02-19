@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h2= title
+  hr
+  p 
+    strong Create an account.
+
+  div(class="")
+    form(method="post") 
+      div(class="")
+        label(for="fullname" class="block") Fullname
+        input(id="fullname" name="fullname" type="text" placeholder="Enter your name")
+      
+      div(class="")
+        label(for="username" class="block") Username (email)
+        input(id="username" name="username" type="email" placeholder="abc123@gmail.com")
+
+      div(class="")
+        label(for="password" class="block") Password
+        input(id="password" name="password" type="password" placeholder="You super secret password")
+
+      div(class="")
+        label(for="password-confirm" class="block") Confirm password 
+        input(id="password-confirm" name="password-confirm" type="password" placeholder="Confirm your super secret password")
+
+      div(class="")
+        button(type="submit") Sign Up
+  
+  div(class="")
+    p Already have an account? 
+      a(href="/login" class="text-sky-500") Log in 
+      | now.  
+ 
+

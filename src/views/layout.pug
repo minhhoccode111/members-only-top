@@ -14,11 +14,11 @@ html
     //- our custom javascript and css files
     block link
   body(class="bg-black")
-    div#wrapper(class="")
+    div#wrapper(class="bg-white flex flex-col gap-4 min-h-screen max-w-2xl mx-auto")
       header(class="")
         h1(class="") 
-          a(href="#") Dummy Text
-        nav(class="")
+          a(href="#") Members Only
+        //- nav(class="")
           ul(class="")
             li(class="") 
               a(class="" href="#") Home
@@ -35,12 +35,12 @@ html
               a(class="" href="#") Add song  
             //- class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold" 
 
-      main(class="")
+      main(class="flex-1 bg-white")
         block content 
 
       footer(class="p-2 flex items-center justify-center border-t-2") 
         p(class="text-xs")
-          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold"  href="https://github.com/minhhoccode111/inventory-application-top/") This project
+          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold"  href="https://github.com/minhhoccode111/members-only-top/") This project
           |is made with 
           span(class="text-red-400") love 
           |by

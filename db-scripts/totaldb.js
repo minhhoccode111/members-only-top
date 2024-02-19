@@ -20,7 +20,11 @@ async function main() {
   await mongoose.connect(mongoDB);
   const userNum = await User.countDocuments({}).exec();
   const messageNum = await Message.countDocuments({}).exec();
+  const users = await User.find({}).exec();
+  const messages = await Message.find({}).exec();
 
+  debug(`users belike: `, users);
+  debug(`messages belike: `, messages);
   debug(`number of user currently in database: ${userNum}`);
   debug(`number of message currently in database: ${messageNum}`);
   debug('connected');

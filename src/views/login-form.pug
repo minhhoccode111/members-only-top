@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h2= title
+  hr
+  p 
+    strong Anonymous users can only read this site
+  p 
+    strong Please log in to be a normal user whom will be able to create messages
+  hr
+
+  div(class="")
+    form(method="post") 
+      div(class="")
+        label(for="username" class="block") Username 
+        input(id="username" name="username" type="text" placeholder="username" )
+      div(class="")
+        label(for="password" class="block") Password 
+        input(id="password" name="password" type="text" placeholder="super secret password")
+      div(class="")
+        button(type="submit") Login 
+  
+  div(class="")
+    p Don't have an account? 
+      a(href="/signup" class="text-sky-500") Sign up 
+      | now.  
+      
+

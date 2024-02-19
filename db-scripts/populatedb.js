@@ -58,16 +58,20 @@ async function main() {
 async function createUsers() {
   console.log(process.env.USERS_PASSWORD);
   try {
-    const usersPassword = await bcrypt.hash(process.env.USERS_PASSWORD, 10);
+    // const salt = await bcrypt.genSalt();
+    const pw0 = await bcrypt.hash(process.env.USERS_PASSWORD, 10);
+    const pw1 = await bcrypt.hash(process.env.USERS_PASSWORD, 10);
+    const pw2 = await bcrypt.hash(process.env.USERS_PASSWORD, 10);
+    const pw3 = await bcrypt.hash(process.env.USERS_PASSWORD, 10);
 
-    await userCreate(0, 'Normal User', 'normaluser', usersPassword, false, false);
-    await userCreate(1, 'Member User', 'memberuser', usersPassword, true, false);
-    await userCreate(2, 'Admin User', 'adminuser', usersPassword, false, true);
-    await userCreate(3, 'Full Flags User', 'fullflagsuser', usersPassword, true, true);
+    await userCreate(0, 'Normal User', 'normaluser', pw0, false, false);
+    await userCreate(1, 'Member User', 'memberuser', pw1, true, false);
+    await userCreate(2, 'Admin User', 'adminuser', pw2, false, true);
+    await userCreate(3, 'Full Flags User', 'fullflagsuser', pw3, true, true);
 
     const count = await User.countDocuments({}).exec();
     custom(`User models is having: ${count} documents`);
-    custom(`Users password is: ${usersPassword}`);
+    custom(`Users passwords are: `, pw0, pw1, pw2, pw3);
   } catch (error) {
     custom(`the error is: `, error);
     throw error;
