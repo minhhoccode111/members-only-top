@@ -16,22 +16,32 @@ block content
     p You are an anonymous user
 
   if messages.length !== 0
-    ul 
+    ul(class="")
       each mess in messages
-        li
+        li(class="my-4 mx-8 p-4 border rounded-lg relative")
           p 
             strong!= mess.title
-          p!= mess.content
-          if user && user.membership
-            p!= mess.timestamp_formatted
-            p!= mess.user.fullname
 
+          p!= mess.content
+          if user  
+            //- only logged in user can see delete btn
+            div(class="absolute top-0 right-0") 
+              a(href=`/message/${mess._id}/delete` class="text-white bg-red-500 rounded-full grid place-items-center w-6 h-6 m-2") X
+            if user.membership || user.admin
+              p!= mess.timestamp_formatted
+              p!= mess.user.fullname
+
+            //- normal user
+            else 
+              i(class="text-xs") Upgrade 
+                a(href=`/user/${user._id}/upgrade/member` class="text-sky-500") membership 
+                | to see this message's details.
+          //- anonymous user
           else 
-            i(class="text-xs") Be a member to see this message details
+            i(class="text-xs") Please 
+              a(href="/login" class="text-sky-500") login 
+              | to see this message's details.
 
 
   else
     p There are no messages yet! 
-
-
-

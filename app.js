@@ -67,18 +67,15 @@ const LocalStrategy = require('passport-local').Strategy;
 // session object
 const ses = {
   secret: process.env.SECRET,
-  resave: false, // should we resave the session hasn't been modified, performance gain
+  resave: false, // resave session hasn't been modified
   saveUninitialized: true, // whether a session be created for new but not yet modified session
-  // TODO change to 7 days after develop
-  // cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
-  cookie: { maxAge: 1000 * 60 * 2 }, // 2 mins
+  cookie: { maxAge: 1000 * 60 * 2 }, // 2 mins TODO change to 7 days in production
 };
 
 // use secure in production but allowing for testing in development
 debug(process.env.NODE_ENV);
-if (process.env.NODE_ENV === 'production') {
-  ses.cookie.secure = true; // serve secure cookies, only allow cookies on HTTPS
-}
+// serve secure cookies, only allow cookies on HTTPS
+if (process.env.NODE_ENV === 'production') ses.cookie.secure = true;
 
 app.use(session(ses)); // set session
 // call this when passport.authenticate() is called in /login post request
@@ -89,7 +86,9 @@ passport.use(
       const user = await User.findOne({ username: username });
       debug(`local strategy user: `, user);
       if (!user) return done(null, false, { message: 'Incorrect username' });
-      if (!bcrypt.compare(user.password, password)) return done(null, false, { message: 'Incorrect password' });
+      const correct = await bcrypt.compare(password, user.password); // order matter
+      debug(correct);
+      if (!correct) return done(null, false, { message: 'Incorrect password' });
       return done(null, user);
     } catch (err) {
       return done(err);
@@ -110,8 +109,8 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.use(passport.session());
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;

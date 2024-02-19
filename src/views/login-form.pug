@@ -3,10 +3,11 @@ extends layout
 block content
   h2= title
   hr
+  
   p 
-    strong Anonymous users can only read this site
+    strong You need to log in to create messages.
   p 
-    strong Please log in to be a normal user whom will be able to create messages
+    strong Anonymous users have read-only access to the site.
   hr
 
   div(class="")
@@ -28,4 +29,7 @@ block content
       | now.  
       
   if messages
-    p There are error messages!
+    ul
+      each mess in messages 
+        li!= mess
+      

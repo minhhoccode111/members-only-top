@@ -21,6 +21,8 @@ const passport = require('passport');
 module.exports.index = asyncHandler(async (req, res, next) => {
   const messages = await Message.find({}).sort({ created_at: -1 }).populate('user').exec();
 
+  debug(`user in index after logging in: `, req.user);
+
   res.render('index', {
     title: 'Home',
     messages,
@@ -41,13 +43,13 @@ module.exports.logout = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports.login_get = asyncHandler(async (req, res, next) => {
+module.exports.login_get = (req, res) => {
   debug(`the error messages: `, req.session.messages);
   res.render('login-form', {
     title: 'Login',
     messages: req.session.messages, // alert wrong password or username
   });
-});
+};
 
 module.exports.login_post = [
   passport.authenticate('local', {
@@ -59,11 +61,11 @@ module.exports.login_post = [
   },
 ];
 
-module.exports.signup_get = asyncHandler(async (req, res, next) => {
+module.exports.signup_get = (req, res, next) => {
   res.render('signup-form', {
     title: 'Signup',
   });
-});
+};
 
 module.exports.signup_post = [
   body('fullname')
@@ -122,7 +124,7 @@ module.exports.signup_post = [
 ];
 
 module.exports.message_delete_get = asyncHandler(async (req, res, next) => {
-  const message = await Message.findById(req.params.id).exec();
+  const message = await Message.findById(req.params.id).populate({ path: 'user', select: 'fullname' }).exec(); // TODO
 
   if (message === null) {
     const err = new Error('Message Not Found');
