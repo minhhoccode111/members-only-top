@@ -10,19 +10,19 @@ block content
     form(method="post") 
       div(class="")
         label(for="fullname" class="block") Fullname
-        input(id="fullname" name="fullname" type="text" placeholder="Enter your name")
+        input(id="fullname" name="fullname" type="text" placeholder="Enter your name" value=undefined===user?'':user.fullname)
       
       div(class="")
         label(for="username" class="block") Username (email)
-        input(id="username" name="username" type="email" placeholder="abc123@gmail.com")
+        input(id="username" name="username" type="email" placeholder="abc123@gmail.com" value=undefined===user?'':user.username)
 
       div(class="")
         label(for="password" class="block") Password
-        input(id="password" name="password" type="password" placeholder="You super secret password")
+        input(id="password" name="password" type="password" placeholder="You super secret password" value=undefined===user?'': user.password)
 
       div(class="")
         label(for="password-confirm" class="block") Confirm password 
-        input(id="password-confirm" name="password-confirm" type="password" placeholder="Confirm your super secret password")
+        input(id="password-confirm" name="password-confirm" type="password" placeholder="Confirm your super secret password" value=undefined===user?'': user['password-confirm'])
 
       div(class="")
         button(type="submit") Sign Up
@@ -31,5 +31,14 @@ block content
     p Already have an account? 
       a(href="/login" class="text-sky-500") Log in 
       | now.  
+
+  if(errors && errors.length)
+    ul(class="")
+      each e in errors 
+        li(class="")!= e.msg  
+
+
+
+  
  
 
