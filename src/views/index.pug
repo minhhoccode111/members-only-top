@@ -57,7 +57,8 @@ block content
               a(href=`/message/${mess._id}/delete` class="text-white bg-red-500 rounded-full grid place-items-center w-6 h-6 m-2") X
             if user.member|| user.admin
               p!= mess.timestamp_formatted
-              p!= mess.user.fullname
+              p 
+                i(class="text-xs text-gray-500") Sent by:  #{mess.user.fullname}
 
             //- normal user
             else 

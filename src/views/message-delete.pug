@@ -1,6 +1,27 @@
 extends layout
 
 block content
-  h2= title
-  //- TODO
+	h2
+		strong Please confirm you want to delete this message!
 
+	div(class="")
+		h3 
+			strong!= message.title 
+		
+		p!= message.content
+		p!= timestamp_formatted 
+		p Created by: 
+			strong!= message.user.fullname 
+
+
+	div(class="")
+		form(method="post")
+			div(class="")
+				button(type="submit") Delete
+
+			div(class="")
+				a(href="/") Cancel
+
+			
+
+	

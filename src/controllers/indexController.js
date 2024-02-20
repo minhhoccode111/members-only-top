@@ -30,26 +30,30 @@ module.exports.index = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports.about = (req, res, next) => {
+module.exports.about = (req, res) => {
   res.render('about', {
     title: 'About',
   });
 };
 
-module.exports.logout = asyncHandler(async (req, res, next) => {
+module.exports.logout = (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
     res.redirect('/');
   });
-});
+};
 
 module.exports.login_get = (req, res) => {
-  debug(`the error messages: `, req.session.messages);
-  res.render('login-form', {
-    title: 'Login',
-    // alert wrong password or username
-    messages: req.session.messages,
-  });
+  // only not logged in user will be served form
+  if (!req.user) {
+    res.render('login-form', {
+      title: 'Login',
+      // alert wrong password or username
+      messages: req.session.messages,
+    });
+  } else {
+    res.redirect('/');
+  }
 };
 
 module.exports.login_post = [
@@ -57,16 +61,21 @@ module.exports.login_post = [
     failureRedirect: '/login',
     failureMessage: true,
   }),
-  // after succeed
+  // success login
   (req, res) => {
     res.redirect('/');
   },
 ];
 
 module.exports.signup_get = (req, res, next) => {
-  res.render('signup-form', {
-    title: 'Signup',
-  });
+  // only not logged in user will be served form
+  if (!req.user) {
+    res.render('signup-form', {
+      title: 'Signup',
+    });
+  } else {
+    res.redirect('/');
+  }
 };
 
 module.exports.signup_post = [
@@ -126,18 +135,28 @@ module.exports.signup_post = [
 ];
 
 module.exports.message_delete_get = asyncHandler(async (req, res, next) => {
-  const message = await Message.findById(req.params.id).populate({ path: 'user', select: 'fullname' }).exec(); // TODO
+  // redirect to login if not logged in
+  if (!req.user) {
+    res.redirect('/login');
+  } else if (!req.user.admin) {
+    const id = req.user.id;
+    res.redirect(`/user/${id}/upgrade/admin`);
+  } else {
+    const message = await Message.findById(req.params.id).populate({ path: 'user', select: 'fullname' }).exec();
 
-  if (message === null) {
-    const err = new Error('Message Not Found');
-    err.status = 404;
-    next(err);
+    debug(`full detail about message: `, message);
+
+    if (message === null) {
+      const err = new Error('Message Not Found');
+      err.status = 404;
+      next(err);
+    }
+
+    res.render('message-delete', {
+      title: 'Delete message',
+      message,
+    });
   }
-
-  res.render('message-delete', {
-    title: 'Confirm delete message',
-    message,
-  });
 });
 
 module.exports.message_delete_post = asyncHandler(async (req, res, next) => {
