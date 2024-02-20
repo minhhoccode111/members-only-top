@@ -10,22 +10,23 @@ block content
     form(method="post") 
       div(class="")
         label(for="fullname" class="block") Fullname
-        input(id="fullname" name="fullname" type="text" placeholder="Enter your name" value=undefined===user?'':user.fullname)
+        input(class="peer" id="fullname" name="fullname" type="text" placeholder="Enter your name" value=undefined===user?'':user.fullname, required minLength="1" pattern="^(?! )[A-Za-z0-9 ]+(?<! )$")
+        p(class="invisible peer-invalid:visible text-red-500 text-xs") At least 1 character alphanumeric, don't start or end with space!
       
       div(class="")
         label(for="username" class="block") Username (email)
-        input(id="username" name="username" type="email" placeholder="abc123@gmail.com" value=undefined===user?'':user.username)
+        input(id="username" name="username" type="email" placeholder="abc123@gmail.com" value=undefined===user?'':user.username, required minLength="1")
 
       div(class="")
         label(for="password" class="block") Password
-        input(id="password" name="password" type="password" placeholder="You super secret password" value=undefined===user?'': user.password)
+        input(id="password" name="password" type="password" placeholder="You super secret password" value=undefined===user?'': user.password, required minLength="1")
 
       div(class="")
         label(for="password-confirm" class="block") Confirm password 
-        input(id="password-confirm" name="password-confirm" type="password" placeholder="Confirm your super secret password" value=undefined===user?'': user['password-confirm'])
+        input(id="password-confirm" name="password-confirm" type="password" placeholder="Confirm your super secret password" value=undefined===user?'': user['password-confirm'], required minLength="1")
 
       div(class="")
-        button(type="submit") Sign Up
+        button(type="submit" class="text-white bg-green-500 px-4 py-2 rounded-md") Sign Up
   
   div(class="")
     p Already have an account? 
@@ -33,12 +34,6 @@ block content
       | now.  
 
   if(errors && errors.length)
-    ul(class="")
+    ul(class="list-disc")
       each e in errors 
-        li(class="")!= e.msg  
-
-
-
-  
- 
-
+        li(class="border border-black")!= e.msg  

@@ -7,12 +7,12 @@ block content
     form(method="post")
       div(class="")
         label(for="member-passcode" class="block") Member Passcode
-        input(id="member-passcode" name="member-passcode" type="password" placeholder="Super secret passcode")
+        input(id="member-passcode" name="member-passcode" type="password" placeholder="Super secret passcode" required)
 
       div(class="flex gap-2 items-center justify-between")
-        button(type="submit") Upgrade
+        button(type="submit" class="text-white bg-green-500 px-4 py-2 rounded-md") Upgrade
         p 
-          a(href="/") Cancel
+          a(href="/" class="text-white bg-red-500 px-4 py-2 rounded-md") Cancel
 
   if wrongPasscode
     p(class="")

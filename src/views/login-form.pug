@@ -1,9 +1,6 @@
 extends layout
 
 block content
-  h2= title
-  hr
-  
   p 
     strong You need to log in to create messages.
   p 
@@ -14,14 +11,14 @@ block content
     form(method="post") 
       div(class="")
         label(for="username" class="block") Username 
-        input(id="username" name="username" type="text" placeholder="username" )
+        input(id="username" name="username" type="text" placeholder="username" required)
 
       div(class="")
         label(for="password" class="block") Password 
-        input(id="password" name="password" type="password" placeholder="super secret password")
+        input(id="password" name="password" type="password" placeholder="super secret password" required)
 
       div(class="")
-        button(type="submit") Login 
+        button(type="submit" class="text-white bg-green-500 px-4 py-2 rounded-md") Login 
   
   div(class="")
     p Don't have an account? 

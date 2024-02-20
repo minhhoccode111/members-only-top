@@ -89,8 +89,9 @@ module.exports.signup_post = [
   body('username').trim().isLength({ min: 8 }).withMessage(`Username must be least 8 characters`).isEmail().withMessage(`That's not an email address.`).escape(),
   body('password')
     .trim()
-    .isLength({ min: 8, max: 32 })
     .notEmpty()
+		.withMessage(`Password contain all spaces?`)
+    .isLength({ min: 8, max: 32 })
     .withMessage(`Password must be between 8 and 32 characters!`)
     .isStrongPassword()
     .withMessage(`That's password is too weak. Please use at least 1 uppercase, 1 lowercase, 1 number, 1 special character!`)

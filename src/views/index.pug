@@ -1,8 +1,6 @@
 extends layout
 
 block content
-  h1= title
-
   if user && user.admin 
     p Welcome, #{user.fullname}, you are an admin.
 
