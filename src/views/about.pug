@@ -1,0 +1,32 @@
+
+extends layout
+
+block link
+
+block content
+  header(class="")
+    h2(class="font-bold font-mono my-2") About
+
+  section(class="") 
+    h3(class="font-bold font-mono my-2 text-sm") This project
+    table(class="text-xs") 
+      tr 
+        th(class="text-left p-1") Built with
+        td Express, mongoose, passport, bcrypt, tailwind...
+      tr 
+        th(class="text-left p-1") Database
+        td Atlas MongoDB
+      tr 
+        th(class="text-left p-1") Hosted with
+        td Glitch
+      tr
+        th(class="text-left p-1") Assignment
+        td 
+          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold" href="https://www.theodinproject.com/lessons/nodejs-members-only") Odin - Nodejs course - Project Members Only
+      tr
+        th(class="text-left p-1") Source code
+        td 
+          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold" href="https://github.com/minhhoccode111/members-only-top") GitHub
+      
+    h3(class="font-bold font-mono my-2 text-sm") Me
+    p(class="text-xs p-1") A self-taught developer who likes to solve problems. 
