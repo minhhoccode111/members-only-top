@@ -1,3 +1,19 @@
 extends layout
 
 block content
+  h2 Hello, #{user.fullname}. Please enter membership passcode to upgrade.
+  h2 Congrats, you are the 1000000th user. Upgrade to member for free with asdasdasd
+  div(class="")
+    form(method="post")
+      div(class="")
+        label(for="member-passcode" class="block") Member Passcode
+        input(id="member-passcode" name="member-passcode" type="text" placeholder="Super secret passcode")
+
+      div(class="flex gap-2 items-center justify-between")
+        button(type="submit") Upgrade
+        p 
+          a(href="/") Cancel
+
+  if wrongPasscode
+    p(class="")
+      strong Your passcode is wrong
