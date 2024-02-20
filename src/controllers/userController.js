@@ -18,7 +18,7 @@ module.exports.create_get = (req, res, next) => {
   } else {
     debug(`see if session user different from db user: db`, req.params.id);
     debug(`see if session user different from db user: session`, req.user.id);
-    // try to user different id on the URL
+    // logged in but try to user different id on the URL
     if (req.params.id !== req.user.id) {
       const err = new Error(`Invalid URL`);
       err.status = 404;
@@ -33,10 +33,36 @@ module.exports.create_get = (req, res, next) => {
 };
 
 module.exports.create_post = [
-  //
-  body('title').trim().notEmpty().escape(),
-  body('content').trim().notEmpty().escape(),
-  asyncHandler(async (req, res, next) => {}),
+  body('title', `Title cannot be empty!`).trim().notEmpty().escape(),
+  body('content', `Content cannot be empty!`).trim().notEmpty().escape(),
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req).array();
+
+    const user = await User.findById(req.params.id).exec();
+
+    if (user === null) {
+      const err = new Error(`User not found`);
+      err.status = 404;
+      next(err);
+    }
+
+    const message = new Message({
+      title: req.body.title,
+      content: req.body.content,
+      user,
+    });
+
+    if (errors.length !== 0) {
+      res.render('message-form', {
+        title: 'New message',
+        user,
+        errors,
+      });
+    } else {
+      await message.save();
+      res.redirect('/');
+    }
+  }),
 ];
 
 module.exports.upgrade_member_get = asyncHandler(async (req, res, next) => {

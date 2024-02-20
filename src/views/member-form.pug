@@ -1,16 +1,3 @@
 extends layout
 
 block content
-  h2 You are creating new message as ${user.fullname}
-  div(class="")
-    form(method="post") 
-      div(class="")
-        label(for="title" class="block") Password
-        input(id="title" name="title" type="title" placeholder="Title")
-
-      div(class="")
-        label(for="content" class="block") Confirm password 
-        textarea(id="content" name="content" placeholder="Content")
-
-      div(class="")
-        button(type="submit") Create

@@ -1,5 +1,24 @@
-extens layout
+extends layout
 
 block content
-	h2= title
-// TODO
+	h2 You are creating new message as #{user.fullname}
+	div(class="")
+		form(method="post") 
+			div(class="")
+				label(for="title" class="block") Title
+				input(id="title" name="title" type="title" placeholder="Title")
+
+			div(class="")
+				label(for="content" class="block") Content
+				textarea(class="box-border w-full" id="content" name="content" placeholder="Content")
+
+			div(class="flex gap-2 items-center justify-between")
+				button(type="submit") Create
+				p 
+					a(href="/") Cancel
+
+	if errors && errors.length !== 0
+		ul(class="")
+			each e in errors 
+				li!= e.msg
+
