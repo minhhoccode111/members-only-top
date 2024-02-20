@@ -1,19 +1,17 @@
 extends layout
 
 block content
-  h2 Hello, #{user.fullname}. Please enter membership passcode to upgrade.
-  h2 Congrats, you are the 1000000th user. Upgrade to member for free with asdasdasd
+  h2(class="px-4 py-2") Hello, #[strong #{user.fullname}]. Please enter membership passcode to upgrade.
+  h2(class="px-4 py-2") Congrats, you are the 1000000th user. Upgrade to member for free with asdasdasd
   div(class="")
     form(method="post")
-      div(class="")
-        label(for="member-passcode" class="block") Member Passcode
-        input(id="member-passcode" name="member-passcode" type="password" placeholder="Super secret passcode" required)
+      div(class="p-2 m-2")
+        label(for="member-passcode" class="block text-lg") *Member Passcode
+        input(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500" id="member-passcode" name="member-passcode" type="password" placeholder="Your super secret passcode" required)
 
-      div(class="flex gap-2 items-center justify-between")
-        button(type="submit" class="text-white bg-green-500 px-4 py-2 rounded-md") Upgrade
-        p 
-          a(href="/" class="text-white bg-red-500 px-4 py-2 rounded-md") Cancel
+      div(class="flex items-center justify-end p-4")
+        button(type="submit" class="font-bold text-white bg-green-500 px-4 py-2 rounded-md border border-white hover:border-green-500 hover:text-green-500 hover:bg-white transition-all") Upgrade
 
   if wrongPasscode
-    p(class="")
-      strong Your member passcode is wrong
+    p(class="p-2 m-2 text-red-500 font-bold")
+      strong *Your member passcode is wrong

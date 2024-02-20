@@ -1,37 +1,34 @@
 extends layout
 
 block content
-  h2= title
-  hr
-  p 
-    strong Create an account.
-
-  div(class="")
+  h2(class="text-2xl font-bold")!= title
+  div(class="my-8")
     form(method="post") 
-      div(class="")
-        label(for="fullname" class="block") Fullname
-        input(class="peer" id="fullname" name="fullname" type="text" placeholder="Enter your name" value=undefined===user?'':user.fullname, required minLength="1" pattern="^(?! )[A-Za-z0-9 ]+(?<! )$")
-        p(class="invisible peer-invalid:visible text-red-500 text-xs") At least 1 character alphanumeric, don't start or end with space!
+      div(class="p-2 m-2")
+        label(for="fullname" class="block text-lg") *Fullname
+        input(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500 peer" id="fullname" name="fullname" type="text" placeholder="Enter your name" value=undefined===user?'':user.fullname, required minLength="1" pattern="^(?! )[A-Za-z0-9 ]+")
+        p(class="p-1 peer-invalid:block hidden invisible peer-invalid:visible text-red-500 text-xs") *At least 1 character alphanumeric and don't start with space!
       
-      div(class="")
-        label(for="username" class="block") Username (email)
-        input(id="username" name="username" type="email" placeholder="abc123@gmail.com" value=undefined===user?'':user.username, required minLength="1")
+      div(class="p-2 m-2")
+        label(for="username" class="block text-lg") *Username
+        input(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500 peer" id="username" name="username" type="email" placeholder="abc123@gmail.com" value=undefined===user?'':user.username, required minLength="1")
+        p(class="p-1 peer-invalid:block hidden invisible peer-invalid:visible text-red-500 text-xs") *User name must be email for uniqueness
 
-      div(class="")
-        label(for="password" class="block") Password
-        input(id="password" name="password" type="password" placeholder="You super secret password" value=undefined===user?'': user.password, required minLength="1")
+      div(class="p-2 m-2")
+        label(for="password" class="block text-lg") *Password
+        input(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500" id="password" name="password" type="password" placeholder="You super secret password" value=undefined===user?'': user.password, required minLength="1")
 
-      div(class="")
-        label(for="password-confirm" class="block") Confirm password 
-        input(id="password-confirm" name="password-confirm" type="password" placeholder="Confirm your super secret password" value=undefined===user?'': user['password-confirm'], required minLength="1")
+      div(class="p-2 m-2")
+        label(for="password-confirm" class="block text-lg") *Confirm password 
+        input(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500" id="password-confirm" name="password-confirm" type="password" placeholder="Confirm your super secret password" value=undefined===user?'': user['password-confirm'], required minLength="1")
 
-      div(class="")
-        button(type="submit" class="text-white bg-green-500 px-4 py-2 rounded-md") Sign Up
+      div(class="flex items-center justify-end p-4")
+        button(type="submit" class="font-bold text-white bg-green-500 px-4 py-2 rounded-md border border-white hover:border-green-500 hover:text-green-500 hover:bg-white transition-all") Sign Up
   
   div(class="")
-    p Already have an account? 
-      a(href="/login" class="text-sky-500") Log in 
-      | now.  
+    p(class="text-lg") Already have an account?
+      a(href="/login" class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Log in
+      |now.
 
   if(errors && errors.length)
     ul(class="list-disc")

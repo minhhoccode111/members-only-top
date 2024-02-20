@@ -16,7 +16,7 @@ The **Members Only TOP** application is created according to the assignment from
 - Upload images
 - Password
 - Backend validation
-- Beautiful UI with Tailwind 😅
+- Beautiful UI with Tailwind
 
 ## **Outcome**
 
@@ -27,21 +27,18 @@ The **Members Only TOP** application is created according to the assignment from
 - Used **pug** (views)
 - Used **express-validator** (form, password validation)
 - Used **luxon** (date)
-- Used **multer** (file upload)
-- Used **bootstrap** (style)
 - Used **tailwind**
 - Used **debug**
-- Used **fs-extra** (move file)
 - Used **fs/promises** (work with files)
 - Used **dotenv** (environment variables)
 - Used **passport-local** (authentication)
-- Learned to debug a lot of `multer` cases
-- A more detail note about this problem can be found [here](NOTE.md)
+- Used **bcrypt** (secure password)
 
 ## **Idea to implement**
 
 - Fully responsive
 - Animations
+- Files upload
 
 ## **Getting Started**
 
@@ -60,7 +57,7 @@ git clone git@github.com:minhhoccode111/members-only-top.git
 then
 
 ```bash
-cd members-only-top 
+cd members-only-top
 npm install
 npm start
 ```

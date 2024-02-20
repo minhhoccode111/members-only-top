@@ -1,50 +1,51 @@
 extends layout
 
 block content
-  if user && user.admin 
-    p Welcome, #{user.fullname}, you are an admin.
+  h2(class="text-lg")
+    if user && user.admin 
+      | Welcome, #{user.fullname}, you are an admin.
 
-  else if user && user.member
-    p Welcome, #{user.fullname}, you are a member.
+    else if user && user.member
+      | Welcome, #{user.fullname}, you are a member.
 
-  else if user 
-    p Welcome, #{user.fullname}, you are a normal user.
+    else if user 
+      | Welcome, #{user.fullname}, you are a normal user.
 
-  else
-    p Welcome, you are an anonymous user.
+    else
+      | Welcome, you are an anonymous user.
 
   //- display links proper way
-  div(class="flex gap-2 items-center justify-between text-sky-500 p-4")
+  div(class="flex gap-2 items-center justify-between p-4")
     if user 
       //- normal
       if !user.member
         p 
-          a(href=`/user/${user.id}/upgrade/member`) Upgrade membership
+          a(href=`/user/${user.id}/upgrade/member` class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Be a member
       else 
         p 
-          a(href=`/user/${user.id}/downgrade/member`) Downgrade membership
+          a(href=`/user/${user.id}/downgrade/member` class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Cancel membership
       if !user.admin  
         p 
-          a(href=`/user/${user.id}/upgrade/admin`) Upgrade admin
+          a(href=`/user/${user.id}/upgrade/admin` class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Be an admin
       else 
         p 
-          a(href=`/user/${user.id}/downgrade/admin`) Downgrade admin
+          a(href=`/user/${user.id}/downgrade/admin` class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Cancel adminship
       p 
-        a(href="/logout") Logout
+        a(href="/logout" class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Logout
       p 
-        a(href=`/user/${user.id}/create`) New message
+        a(href=`/user/${user.id}/create` class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") New message
 
     else
       p 
-        a(href="/login") Login
+        a(href="/login" class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Login
       p 
-        a(href="/signup") Signup
+        a(href="/signup" class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Signup
 
 
   if messages.length !== 0
     ul(class="")
       each mess in messages
-        li(class="my-4 mx-8 p-4 border rounded-lg relative")
+        li(class="my-4 mx-8 p-4 border border-gray-50 rounded-lg relative shadow-lg")
           p 
             strong!= mess.title
 
@@ -52,22 +53,22 @@ block content
           if user  
             //- only logged in user can see delete btn
             div(class="absolute top-0 right-0") 
-              a(href=`/message/${mess._id}/delete` class="text-white bg-red-500 rounded-full grid place-items-center w-6 h-6 m-2") X
+              a(href=`/message/${mess._id}/delete` class="text-white bg-red-500 rounded-full grid place-items-center w-6 h-6 m-2 border border-white hover:border-red-500 hover:text-red-500 hover:bg-white transition-colors") X
             if user.member|| user.admin
               p 
                 i(class="text-xs text-gray-500") Sent by:  #{mess.user.fullname}. At #{mess.timestamp_formatted}
 
             //- normal user
             else 
-              i(class="text-xs") Upgrade 
-                a(href=`/user/${user._id}/upgrade/member` class="text-sky-500") membership 
-                | to see this message's details.
+              i(class="text-xs")
+                a(href=`/user/${user._id}/upgrade/member` class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Be a member
+                |to see this message's details.
           //- anonymous user
           else 
-            i(class="text-xs") Please 
-              a(href="/login" class="text-sky-500") login 
-              | to see this message's details and create your message
+            i(class="text-xs") Please
+              a(href="/login" class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") login
+              |to see this message's details and create your message
 
 
   else
-    p There are no messages yet! 
+    p(class="text-lg") There are no messages yet! 

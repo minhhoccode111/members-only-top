@@ -1,18 +1,20 @@
 extends layout
 
 block content
-  h2 Hello, #{user.fullname}. Please enter admin passcode to upgrade.
+  h2(class="px-4 py-2") Hello, #[strong #{user.fullname}]. Please enter admin passcode to upgrade.
+
+  p(class="text-red-400 px-4 py-2") 
+    strong 
+      i *Messages can only be deleted by admins.
   div(class="")
     form(method="post")
-      div(class="")
-        label(for="admin-passcode" class="block") Admin Passcode
-        input(id="admin-passcode" name="admin-passcode" type="password" placeholder="Super secret passcode")
+      div(class="p-2 m-2")
+        label(for="admin-passcode" class="block text-lg") *Admin Passcode
+        input(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500" id="admin-passcode" name="admin-passcode" type="password" placeholder="Super secret passcode")
 
-      div(class="flex gap-2 items-center justify-between")
-        button(type="submit" class="text-white bg-green-500 px-4 py-2 rounded-md") Upgrade
-        p 
-          a(href="/" class="text-white bg-red-500 px-4 py-2 rounded-md") Cancel
+      div(class="flex items-center justify-end p-4")
+        button(type="submit" class="font-bold text-white bg-green-500 px-4 py-2 rounded-md border border-white hover:border-green-500 hover:text-green-500 hover:bg-white transition-all") Upgrade
 
   if wrongPasscode
-    p(class="")
-      strong Your admin passcode is wrong
+    p(class="p-2 m-2 text-red-500 font-bold")
+      strong *Your admin passcode is wrong

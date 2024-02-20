@@ -15,18 +15,23 @@ html
     block link
   body(class="bg-black")
     div#wrapper(class="bg-white flex flex-col gap-4 min-h-screen max-w-2xl mx-auto")
-      header(class="p-4")
-        h1(class="text-4xl font-bold") 
-          a(href="#") Members Only
+      header(class="p-4 flex gap-4 items-center justify-between")
+        h1(class="max-sm:text-2xl text-4xl font-bold") 
+          a(href="/") Members Only
+        ul(class="flex gap-3 items-center justify-between")
+          li 
+            a(href="/" class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") Home
+          li 
+            a(href="/about" class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold") About
 
       main(class="flex-1 bg-white p-4")
         block content 
 
       footer(class="p-2 flex items-center justify-center border-t-2") 
         p(class="text-xs")
-          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold"  href="https://github.com/minhhoccode111/members-only-top/") This project
+          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold" href="https://github.com/minhhoccode111/members-only-top/") This project
           |is made with 
           span(class="text-red-400") love 
           |by
-          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold"  href="https://github.com/minhhoccode111/") minhhoccode111
+          a(class="text-sky-500 transition-all hover:text-white hover:bg-sky-500 p-1 rounded underline underline-offset-4 decoration-dotted hover:decoration-solid font-bold" href="https://github.com/minhhoccode111/") minhhoccode111
           |.

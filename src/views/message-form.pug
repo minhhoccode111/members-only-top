@@ -1,21 +1,19 @@
 extends layout
 
 block content
-	h2 You are creating new message as #{user.fullname}
-	div(class="")
+	h2(class="text-xl") You are creating new message as #[strong #{user.fullname}]
+	div(class="my-8")
 		form(method="post") 
-			div(class="")
-				label(for="title" class="block") Title
-				input(id="title" name="title" type="title" placeholder="Title" required)
+			div(class="p-2 m-2")
+				label(for="title" class="block text-lg") *Title
+				input(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500" id="title" name="title" type="title" placeholder="Title..." required)
 
-			div(class="")
-				label(for="content" class="block") Content
-				textarea(class="box-border w-full" id="content" name="content" placeholder="Content" required)
+			div(class="p-2 m-2")
+				label(for="content" class="block text-lg") *Content
+				textarea(class="box-border w-full border-t border-gray-100 outline-none shadow-md shadow-gray-400 px-2 py-1 rounded-md focus-within:shadow-inner focus-within:border focus-within:border-gray-500" id="content" name="content" placeholder="Content..." required)
 
-			div(class="flex gap-2 items-center justify-between")
-				button(type="submit" class="text-white bg-green-500 px-4 py-2 rounded-md") Create
-				p 
-					a(href="/" class="text-white bg-red-500 px-4 py-2 rounded-md") Cancel
+			div(class="flex items-center justify-end p-4")
+				button(type="submit" class="font-bold text-white bg-green-500 px-4 py-2 rounded-md border border-white hover:border-green-500 hover:text-green-500 hover:bg-white transition-all") Create
 
 	if errors && errors.length !== 0
 		ul(class="")
