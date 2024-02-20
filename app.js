@@ -78,16 +78,15 @@ debug(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') ses.cookie.secure = true;
 
 app.use(session(ses)); // set session
-// call this when passport.authenticate() is called in /login post request
+
+// call this when passport.authenticate() is called in /login post request, setup local strategy
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      debug(`call local strategy`, username, password);
       const user = await User.findOne({ username: username });
-      debug(`local strategy user: `, user);
       if (!user) return done(null, false, { message: 'Incorrect username' });
-      const correct = await bcrypt.compare(password, user.password); // order matter
-      debug(correct);
+      // order matter, 1st arg is raw input in form, 2nd is password in db
+      const correct = await bcrypt.compare(password, user.password);
       if (!correct) return done(null, false, { message: 'Incorrect password' });
       return done(null, user);
     } catch (err) {

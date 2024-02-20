@@ -26,7 +26,7 @@ const UserSchema = new Schema({
       max: 32,
     },
   },
-  membership: {
+  member: {
     type: Boolean,
     required: true,
   },

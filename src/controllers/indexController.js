@@ -47,7 +47,8 @@ module.exports.login_get = (req, res) => {
   debug(`the error messages: `, req.session.messages);
   res.render('login-form', {
     title: 'Login',
-    messages: req.session.messages, // alert wrong password or username
+    // alert wrong password or username
+    messages: req.session.messages,
   });
 };
 
@@ -56,6 +57,7 @@ module.exports.login_post = [
     failureRedirect: '/login',
     failureMessage: true,
   }),
+  // after succeed
   (req, res) => {
     res.redirect('/');
   },

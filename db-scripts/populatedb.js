@@ -22,8 +22,8 @@ const messages = [];
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
-const userCreate = async (index, fullname, username, password, membership, admin) => {
-  const userDetail = { fullname, username, password, membership, admin };
+const userCreate = async (index, fullname, username, password, member, admin) => {
+  const userDetail = { fullname, username, password, member, admin };
   const user = new User(userDetail);
   await user.save();
   users[index] = user;

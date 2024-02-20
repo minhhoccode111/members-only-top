@@ -6,7 +6,7 @@ block content
   if user && user.admin 
     p You are an admin user
 
-  else if user && user.membership
+  else if user && user.member
     p You are a member user
 
   else if user 
@@ -14,6 +14,34 @@ block content
 
   else
     p You are an anonymous user
+
+  //- display links proper way
+  div(class="flex gap-2 items-center justify-between text-sky-500 p-4")
+    if user 
+      //- normal
+      if !user.member
+        p 
+          a(href=`/user/${user.id}/upgrade/member`) Upgrade membership
+      else 
+        p 
+          a(href=`/user/${user.id}/downgrade/member`) Downgrade membership
+      if !user.admin  
+        p 
+          a(href=`/user/${user.id}/upgrade/admin`) Upgrade admin
+      else 
+        p 
+          a(href=`/user/${user.id}/downgrade/admin`) Downgrade admin
+      p 
+        a(href="/logout") Logout
+      p 
+        a(href=`/user/${user.id}/create`) New message
+
+    else
+      p 
+        a(href="/login") Login
+      p 
+        a(href="/signup") Signup
+
 
   if messages.length !== 0
     ul(class="")
@@ -27,7 +55,7 @@ block content
             //- only logged in user can see delete btn
             div(class="absolute top-0 right-0") 
               a(href=`/message/${mess._id}/delete` class="text-white bg-red-500 rounded-full grid place-items-center w-6 h-6 m-2") X
-            if user.membership || user.admin
+            if user.member|| user.admin
               p!= mess.timestamp_formatted
               p!= mess.user.fullname
 
@@ -40,7 +68,7 @@ block content
           else 
             i(class="text-xs") Please 
               a(href="/login" class="text-sky-500") login 
-              | to see this message's details.
+              | to see this message's details and create new message
 
 
   else
