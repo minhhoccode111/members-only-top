@@ -177,9 +177,51 @@ module.exports.upgrade_admin_post = [
 ];
 
 module.exports.downgrade_member = asyncHandler(async (req, res, next) => {
-  res.send(`DOWNGRADE MEMBER GET: NOT IMPLEMENTED: USER ID: ${req.params.id}`);
+  // not logged in yet
+  if (!req.user) {
+    debug(`You are not logged in yet`);
+    res.redirect('/');
+
+    // try to use wrong URL
+  } else if (req.user.id !== req.params.id) {
+    const err = new Error(`Invalid URL`);
+    err.status = 404;
+    next(err);
+
+    // downgrade an account not a member yet
+  } else if (!req.user.member) {
+    debug(`You are not a member yet`);
+    res.redirect('/');
+  } else {
+    const user = await User.findById(req.user.id).exec();
+    user.member = false;
+    await user.save();
+    res.redirect('/');
+  }
 });
 
 module.exports.downgrade_admin = asyncHandler(async (req, res, next) => {
-  res.send(`DOWNGRADE ADMIN POST: NOT IMPLEMENTED: USER ID: ${req.params.id}`);
+  // not logged in yet
+  if (!req.user) {
+    debug(`You are not logged in yet`);
+    res.redirect('/');
+
+    // try to use wrong URL
+  } else if (req.user.id !== req.params.id) {
+    const err = new Error(`Invalid URL`);
+    err.status = 404;
+    next(err);
+
+    // downgrade an account not a admin yet
+  } else if (!req.user.admin) {
+    debug(`You are not a admin yet`);
+    res.redirect('/');
+
+    // downgrade if nothing wrong
+  } else {
+    const user = await User.findById(req.user.id).exec();
+    user.admin = false;
+    await user.save();
+    res.redirect('/');
+  }
 });
