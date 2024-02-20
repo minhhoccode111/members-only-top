@@ -112,7 +112,7 @@ module.exports.signup_post = [
 
     const user = new User({
       admin: false,
-      membership: false,
+      member: false,
       password: req.body.password, // need update if store in db
       fullname: req.body.fullname,
       username: req.body.username,

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h2 Hello, #{user.fullname}. Please enter admin passcode to upgrade.
+  div(class="")
+    form(method="post")
+      div(class="")
+        label(for="admin-passcode" class="block") Admin Passcode
+        input(id="admin-passcode" name="admin-passcode" type="password" placeholder="Super secret passcode")
+
+      div(class="flex gap-2 items-center justify-between")
+        button(type="submit") Upgrade
+        p 
+          a(href="/") Cancel
+
+  if wrongPasscode
+    p(class="")
+      strong Your admin passcode is wrong

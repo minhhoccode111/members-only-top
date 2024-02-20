@@ -122,12 +122,59 @@ module.exports.upgrade_member_post = [
 ];
 
 module.exports.upgrade_admin_get = asyncHandler(async (req, res, next) => {
-  res.send(`UPGRADE ADMIN GET: NOT IMPLEMENTED: USER ID: ${req.params.id}`);
+  // not logged in
+  if (!req.user) {
+    debug(`Cannot upgrade admin before logging in`);
+    res.redirect('/login');
+  }
+  // logged in but try to user different id on the URL
+  else if (req.params.id !== req.user.id) {
+    const err = new Error(`Invalid URL`);
+    err.status = 404;
+    next(err);
+  }
+  // already a member but still try to access this URL
+  else if (req.user.admin) {
+    debug(`You are already a admin!`);
+    res.redirect('/');
+    // logged in and not member
+  } else {
+    res.render('admin-form', {
+      title: 'Upgrade to admin',
+      user: req.user,
+    });
+  }
 });
 
-module.exports.upgrade_admin_post = asyncHandler(async (req, res, next) => {
-  res.send(`UPGRADE ADMIN POST: NOT IMPLEMENTED: USER ID: ${req.params.id}`);
-});
+module.exports.upgrade_admin_post = [
+  body('admin-passcode', `Wrong passcode`).custom((value) => value === process.env.ADMIN_PASSCODE),
+  asyncHandler(async (req, res, next) => {
+    const error = validationResult(req);
+
+    const user = await User.findById(req.params.id).exec();
+
+    if (user === null) {
+      const err = new Error(`User not found`);
+      err.status = 404;
+      next(err);
+    }
+
+    debug(process.env.ADMIN_PASSCODE);
+
+    if (error.isEmpty()) {
+      user.admin = true;
+      await user.save();
+      res.redirect('/');
+    } else {
+      // wrong passcode
+      res.render('admin-form', {
+        title: 'Upgrade admin',
+        wrongPasscode: true,
+        user: req.user,
+      });
+    }
+  }),
+];
 
 module.exports.downgrade_member = asyncHandler(async (req, res, next) => {
   res.send(`DOWNGRADE MEMBER GET: NOT IMPLEMENTED: USER ID: ${req.params.id}`);

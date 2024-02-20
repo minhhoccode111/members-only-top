@@ -7,7 +7,7 @@ block content
     form(method="post")
       div(class="")
         label(for="member-passcode" class="block") Member Passcode
-        input(id="member-passcode" name="member-passcode" type="text" placeholder="Super secret passcode")
+        input(id="member-passcode" name="member-passcode" type="password" placeholder="Super secret passcode")
 
       div(class="flex gap-2 items-center justify-between")
         button(type="submit") Upgrade
@@ -16,4 +16,4 @@ block content
 
   if wrongPasscode
     p(class="")
-      strong Your passcode is wrong
+      strong Your member passcode is wrong
