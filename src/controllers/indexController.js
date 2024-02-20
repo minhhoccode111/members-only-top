@@ -152,7 +152,7 @@ module.exports.message_delete_get = asyncHandler(async (req, res, next) => {
       next(err);
     }
 
-    res.render('message-delete', {
+    res.render('delete-message-form', {
       title: 'Delete message',
       message,
     });

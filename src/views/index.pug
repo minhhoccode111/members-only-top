@@ -4,16 +4,16 @@ block content
   h1= title
 
   if user && user.admin 
-    p You are an admin user
+    p Welcome, #{user.fullname}, you are an admin.
 
   else if user && user.member
-    p You are a member user
+    p Welcome, #{user.fullname}, you are a member.
 
   else if user 
-    p You are a normal user
+    p Welcome, #{user.fullname}, you are a normal user.
 
   else
-    p You are an anonymous user
+    p You are an anonymous user.
 
   //- display links proper way
   div(class="flex gap-2 items-center justify-between text-sky-500 p-4")
