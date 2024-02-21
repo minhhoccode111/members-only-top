@@ -24,7 +24,7 @@ const MessageSchema = new Schema({
     default: Date.now,
   },
   user: {
-    type: Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
