@@ -3,13 +3,13 @@ extends layout
 block content
   h2(class="text-lg")
     if user && user.admin 
-      | Welcome, #{user.fullname}, you are an admin.
+      | Welcome, #[strong #{user.fullname}], you are an #[strong admin].
 
     else if user && user.member
-      | Welcome, #{user.fullname}, you are a member.
+      | Welcome, #[strong #{user.fullname}], you are a #[strong member].
 
     else if user 
-      | Welcome, #{user.fullname}, you are a normal user.
+      | Welcome, #[strong #{user.fullname}], you are a #[strong normal user].
 
     else
       | Welcome, you are an anonymous user.

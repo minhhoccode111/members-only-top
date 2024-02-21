@@ -8,6 +8,8 @@ The **Members Only TOP** application is created according to the assignment from
 
 ![Members Only Screenshot](/public/images/members-only-screenshot.png)
 
+![Members Only Bcrypt Screenshot](/public/images/members-only-screenshot-password.png)
+
 ## **Demo** [here](https://membersonlytop.glitch.me)
 
 ## **Features**

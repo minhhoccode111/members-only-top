@@ -56,7 +56,7 @@ async function main() {
 }
 
 async function createUsers() {
-  console.log(process.env.USERS_PASSWORD);
+  custom(process.env.USERS_PASSWORD);
   try {
     // why my editor says that we don't need await but will throw an error when don't have await? Is it because documents?
     const pw0 = await bcrypt.hash(process.env.USERS_PASSWORD, 10);

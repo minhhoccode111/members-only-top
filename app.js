@@ -69,13 +69,13 @@ const ses = {
   secret: process.env.SECRET,
   resave: false, // resave session hasn't been modified
   saveUninitialized: true, // whether a session be created for new but not yet modified session
-  cookie: { maxAge: 1000 * 60 * 2 }, // 2 mins TODO change to 7 days in production
+  cookie: { maxAge: 1000 * 60 * 200 }, // 2 mins TODO change to 7 days in production
 };
 
 // use secure in production but allowing for testing in development
 debug(process.env.NODE_ENV);
 // serve secure cookies, only allow cookies on HTTPS
-if (process.env.NODE_ENV === 'production') ses.cookie.secure = true;
+// if (process.env.NODE_ENV === 'production') ses.cookie.secure = true; // can't test production on localhost because it's HTTP
 
 app.use(session(ses)); // set session
 
